@@ -55,9 +55,19 @@ FULL JOIN specs
 ON distributors.distributor_id = specs.domestic_distributor_id
 FULL JOIN rating
 ON specs.movie_id = rating.movie_id
-WHERE headquarters NOT LIKE '%CA%'
+WHERE headquarters NOT LIKE '%CA%';
 -- 2, Dirty Dancing
 
 --7. Which have a higher average rating, movies which are over two hours long or movies which are under two hours?
-
-
+SELECT ROUND(AVG(imdb_rating),2) AS avg_rating
+FROM specs
+INNER JOIN rating
+USING(movie_id)
+WHERE length_in_min > 120
+UNION ALL
+SELECT ROUND(AVG(imdb_rating),2) AS avg_rating
+FROM specs
+INNER JOIN rating
+USING(movie_id)
+WHERE length_in_min < 120
+-- over two hours
