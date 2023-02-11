@@ -20,7 +20,7 @@ LIMIT 1;
 --3. What is the highest grossing G-rated movie? Which company distributed it?
 
 
-SELECT worldwide_gross, company_name 
+SELECT worldwide_gross, company_name, film_title
 FROM specs
 INNER JOIN distributors
 ON specs.domestic_distributor_id = distributors.distributor_id
@@ -29,13 +29,13 @@ ON specs.movie_id = revenue.movie_id
 WHERE mpaa_rating = 'G'
 ORDER BY worldwide_gross DESC
 LIMIT 1;
--- Walt Disney
+-- Walt Disney, toy story 4
 
 --4. Write a query that returns, for each distributor in the distributors table, the distributor name and the number of movies associated with that distributor in the movies table. Your result set should include all of the distributors, whether or not they have any movies in the movies table.
 
 SELECT DISTINCT(company_name), COUNT(film_title) AS number_of_films
 FROM distributors
-INNER JOIN specs
+FULL JOIN specs
 ON distributors.distributor_id = specs.domestic_distributor_id
 GROUP BY DISTINCT(company_name)
 ORDER BY number_of_films DESC;
