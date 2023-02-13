@@ -31,7 +31,7 @@ ORDER BY worldwide_gross DESC
 LIMIT 1;
 -- Walt Disney, toy story 4
 
---4. Write a query that returns, for each distributor in the distributors table, the distributor name and the number of movies associated with that distributor in the movies table. Your result set should include all of the distributors, whether or not they have any movies in the movies table.
+--4. Write a query that returns, for each distributor in the distributors table, the distributor name and the number of movies associated with that distributor in the movies table. (Your result set should include all of the distributors, whether or not they have any movies in the movies table).full join!
 
 SELECT DISTINCT(company_name), COUNT(film_title) AS number_of_films
 FROM distributors
@@ -75,3 +75,16 @@ INNER JOIN rating
 USING(movie_id)
 WHERE length_in_min < 120;
 -- over two hours
+
+SELECT ROUND(AVG(imdb_rating),2) AS over_2_hours,
+			
+			(SELECT ROUND(AVG(imdb_rating),2)
+			FROM specs
+			INNER JOIN rating
+			USING(movie_id)
+			WHERE length_in_min < 120) AS under_2_hours
+FROM specs
+INNER JOIN rating 
+USING(movie_id)
+WHERE length_in_min > 120
+--subquery
